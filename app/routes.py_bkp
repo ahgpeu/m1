@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+import time
+from flask import render_template
+from app import app
+
+@app.route('/')
+@app.route('/index')
+def index():
+    member = 'ya.ru'
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1)
+        result = sock.connect_ex((str(member), 443))
+        if result == 0:
+            True
+            print(str(member) + ' ONLINE')
+            user = str(member) + ' ONLINE'
+        else:
+            print(str(member) + ' OFFLINE')
+ #              ListOff[member] = [datadict.get(member)[0], datadict.get(member)[1]]
+        sock.close()
+    except Exception:
+        user = str(member) + ' OFFLINE'
+    
+#    user = {'username': 'Андрей'}
+    timer = time.ctime()
+    return render_template('index.html', user = user, timer = timer)
