@@ -7,7 +7,11 @@ good_list = []
 bad_list = []
 good_port_list = []
 bad_port_list = []
-api_token = '5221567594:AAEnfrtksxLAMwdS0xvQmdWMDUDrGbxhiJc'
+with open('config/bot.cfg', 'r') as f:
+    api_token = f.read().splitlines()[0]
+    f.close()
+print(api_token)
+#api_token = '5221567594:AAEnfrtksxLAMwdS0xvQmdWMDUDrGbxhiJc'
 def ssl_expiry_datetime(host, port=443):
         ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
         context = ssl.create_default_context()
