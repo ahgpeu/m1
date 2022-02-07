@@ -11,7 +11,6 @@ with open('config/bot.cfg', 'r') as f:
     api_token = f.read().splitlines()[0]
     f.close()
 print(api_token)
-#api_token = '5221567594:AAEnfrtksxLAMwdS0xvQmdWMDUDrGbxhiJc'
 def ssl_expiry_datetime(host, port=443):
         ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
         context = ssl.create_default_context()
@@ -45,7 +44,6 @@ def knock_function(member, count):
                 return ('offline')
             knock_function(member, count)
 
-# requests.get('https://api.telegram.org/bot{}/sendMessage'.format(api_token), params=dict(chat_id='@domrfmonitor', text= str(member[2]) + ' OFFLINE1'))
     except Exception:
         sock.close()
         if count == 5:
@@ -53,7 +51,6 @@ def knock_function(member, count):
             return ('offline')
         count = count + 1
         knock_function(member, count)
-# requests.get('https://api.telegram.org/bot{}/sendMessage'.format(api_token), params=dict(chat_id='@domrfmonitor', text= str(member[2]) + ' OFFLINE2'))
 while 1 == 1:
     with open('config/ports.cfg', 'r') as f:
         ListAll = [line.rstrip('\n').split(';') for line in f]
