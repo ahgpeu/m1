@@ -11,6 +11,8 @@ with open('config/bot.cfg', 'r') as f:
     api_token = f.read().splitlines()[0]
     f.close()
 print(api_token)
+
+
 def ssl_expiry_datetime(host, port=443):
         ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
         context = ssl.create_default_context()
@@ -25,10 +27,11 @@ def ssl_expiry_datetime(host, port=443):
             res = '0'
         return res
 
+
 def knock_function(member, count):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(1)
     try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(1)
         result = sock.connect_ex((str(member[0]), int(member[1])))
         if result == 0:
             sock.close()
@@ -43,7 +46,6 @@ def knock_function(member, count):
                 count = 0
                 return ('offline')
             knock_function(member, count)
-
     except Exception:
         sock.close()
         if count == 5:
@@ -51,6 +53,8 @@ def knock_function(member, count):
             return ('offline')
         count = count + 1
         knock_function(member, count)
+
+
 while 1 == 1:
     with open('config/ports.cfg', 'r') as f:
         ListAll = [line.rstrip('\n').split(';') for line in f]
