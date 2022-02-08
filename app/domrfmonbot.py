@@ -3,6 +3,7 @@ import ssl
 import socket
 import time
 import datetime
+
 chat_name = '@domrfmonitor'
 good_list = []
 bad_list = []
@@ -20,18 +21,18 @@ def bot_message(botname, message):
 
 
 def ssl_expiry_datetime(host, port):
-        ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
-        context = ssl.create_default_context()
-        conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=host,)
+    ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
+    context = ssl.create_default_context()
+    conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=host, )
     # 3 second timeout because Lambda has runtime limitations
-        conn.settimeout(3.0)
-        try:
-            conn.connect((host, port))
-            ssl_info = conn.getpeercert()
-            res = datetime.datetime.strptime(ssl_info['notAfter'], ssl_date_fmt)
-        except:
-            res = '0'
-        return res
+    conn.settimeout(3.0)
+    try:
+        conn.connect((host, port))
+        ssl_info = conn.getpeercert()
+        res = datetime.datetime.strptime(ssl_info['notAfter'], ssl_date_fmt)
+    except:
+        res = '0'
+    return res
 
 
 def knock_function(member, count):
@@ -42,7 +43,7 @@ def knock_function(member, count):
         if result == 0:
             sock.close()
             count = 0
-            return('online')
+            return ('online')
         else:
             sock.close()
             count = count + 1
@@ -81,12 +82,12 @@ while 1 == 1:
     for member in addres_list:
         remains = ssl_expiry_datetime(member, 443)
         if remains != '0':
-            if int(str((remains-datetime.datetime.now()).days)) < 30:
+            if int(str((remains - datetime.datetime.now()).days)) < 30:
                 bot_message(chat_name, str(member) + ' истекает сертификат!')
                 good_list.append([member, (remains - datetime.datetime.now()).days])
         else:
             bad_list.append(member)
             bot_message(chat_name, str(member) + ' НЕДОСТУПЕН!')
- #    print(good_port_list)
- #    print(bad_port_list)
+    #    print(good_port_list)
+    #    print(bad_port_list)
     time.sleep(300)
