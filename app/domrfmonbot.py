@@ -3,6 +3,7 @@ import ssl
 import socket
 import time
 import datetime
+chat_name = '@domrfmonitor'
 good_list = []
 bad_list = []
 good_port_list = []
@@ -11,6 +12,12 @@ with open('config/bot.cfg', 'r') as f:
     api_token = f.read().splitlines()[0]
     f.close()
 print(api_token)
+
+
+def bot_message(botname, message):
+    requests.get('https://api.telegram.org/bot{}/sendMessage'.format(api_token),
+                 params=dict(chat_id=botname, text=str(member) + message))
+
 
 
 def ssl_expiry_datetime(host, port=443):
@@ -41,8 +48,7 @@ def knock_function(member, count):
             sock.close()
             count = count + 1
             if count == 5:
-                requests.get('https://api.telegram.org/bot{}/sendMessage'.format(api_token),
-                             params=dict(chat_id='@domrfmonitor', text=str(member[2]) + ' OFFLINE1'))
+                bot_message(chat_name, str(member[2]) + ' Offline')
                 count = 0
                 return ('offline')
             knock_function(member, count)
@@ -65,8 +71,7 @@ while 1 == 1:
         res1 = knock_function(member, count)
         if res1 == 'offline':
             print("result of test: " + str(res1))
-            requests.get('https://api.telegram.org/bot{}/sendMessage'.format(api_token),
-                         params=dict(chat_id='@domrfmonitor', text=str(member[2]) + ' OFFLINE'))
+            bot_message(chat_name, str(member[2]) + ' offline')
         else:
             print('result of test: ' + str(res1))
 
@@ -78,9 +83,11 @@ while 1 == 1:
         remains = ssl_expiry_datetime(member)
         if remains != '0':
             if int(str((remains-datetime.datetime.now()).days)) < 30:
-                requests.get('https://api.telegram.org/bot{}/sendMessage'.format(api_token), params=dict(chat_id='@domrfmonitor', text= str(member) + ' истекает сертификат!'))
-            good_list.append([member, (remains - datetime.datetime.now()).days])
+                bot_message(chat_name, str(member) + ' истекает сертификат!')
+                good_list.append([member, (remains - datetime.datetime.now()).days])
         else:
             bad_list.append(member)
-            requests.get('https://api.telegram.org/bot{}/sendMessage'.format(api_token), params=dict(chat_id='@domrfmonitor', text= str(member) + ' НЕДОСТУПЕН!'))
+            bot_message(chat_name, str(member) + ' НЕДОСТУПЕН!')
+ #    print(good_port_list)
+ #    print(bad_port_list)
     time.sleep(300)
