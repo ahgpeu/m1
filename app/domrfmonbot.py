@@ -19,8 +19,7 @@ def bot_message(botname, message):
                  params=dict(chat_id=botname, text=str(member) + message))
 
 
-
-def ssl_expiry_datetime(host, port=443):
+def ssl_expiry_datetime(host, port):
         ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
         context = ssl.create_default_context()
         conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=host,)
@@ -80,7 +79,7 @@ while 1 == 1:
         f.close()
 
     for member in addres_list:
-        remains = ssl_expiry_datetime(member)
+        remains = ssl_expiry_datetime(member, 443)
         if remains != '0':
             if int(str((remains-datetime.datetime.now()).days)) < 30:
                 bot_message(chat_name, str(member) + ' истекает сертификат!')
