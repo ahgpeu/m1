@@ -23,7 +23,6 @@ def ssl_expiry_datetime(host, port):
     ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
     context = ssl.create_default_context()
     conn = context.wrap_socket(socket.socket(socket.AF_INET), server_hostname=host, )
-    # 3 second timeout because Lambda has runtime limitations
     conn.settimeout(3.0)
     try:
         conn.connect((host, port))
@@ -34,30 +33,30 @@ def ssl_expiry_datetime(host, port):
     return res
 
 
-def knock_function(member, count):
+def knock_function(member_knock, count_er):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(1)
     try:
-        result = sock.connect_ex((str(member[0]), int(member[1])))
+        result = sock.connect_ex((str(member_knock[0]), int(member_knock[1])))
         if result == 0:
             sock.close()
-            count = 0
-            return ('online')
+            count_er = 0
+            return 'online'
         else:
             sock.close()
-            count = count + 1
-            if count == 5:
-                bot_message(chat_name, str(member[2]) + ' Offline')
-                count = 0
-                return ('offline')
-            knock_function(member, count)
+            count_er = count_er + 1
+            if count_er == 5:
+                bot_message(chat_name, str(member_knock[2]) + ' Offline')
+                count_er = 0
+                return 'offline'
+            knock_function(member_knock, count_er)
     except Exception:
         sock.close()
-        if count == 5:
-            count = 0
-            return ('offline')
-        count = count + 1
-        knock_function(member, count)
+        if count_er == 5:
+            count_er = 0
+            return 'offline'
+        count_er = count_er + 1
+        knock_function(member_knock, count)
 
 
 while 1 == 1:
