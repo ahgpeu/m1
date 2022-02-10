@@ -46,8 +46,10 @@ def knock_function(member_knock):
             print(result)
             count1 += 1
             sock.close()
+            time.sleep(1)
         except socket.error as error:
             count1 += 1
+            time.sleep(1)
             sock.close()
     return 'offline'
 
@@ -60,9 +62,7 @@ while 1 == 1:
         res1 = knock_function(member)
         if res1 == 'offline':
             bad_port_list.append(member)
-            print("result of test: " + str(res1))
         else:
-            print('result of test: ' + str(res1))
             good_port_list.append(member)
 
     with open('config/hosts.cfg', 'r') as f:
@@ -80,10 +80,6 @@ while 1 == 1:
         else:
             bad_list.append(member)
             bot_message(chat_name, str(member) + ' НЕДОСТУПЕН!')
-    print(good_list)
-    print(bad_list)
-    print(good_port_list)
-    print(bad_port_list)
     if len(bad_list) > 0 or len(bad_port_list):
         for member in bad_list:
             bot_message(chat_name, str(member) + ' НЕДОСТУПЕН')
