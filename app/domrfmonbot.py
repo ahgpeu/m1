@@ -33,30 +33,23 @@ def ssl_expiry_datetime(host, port):
     return res
 
 
-def knock_function(member_knock, count_er):
+def knock_function(member_knock):
+    count1 = 0
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(1)
-    try:
-        result = sock.connect_ex((str(member_knock[0]), int(member_knock[1])))
-        if result == 0:
+    while count1 <= 5:
+        try:
+            result = sock.connect_ex((str(member_knock[0]), int(member_knock[1])))
+            if result == 0:
+                sock.close()
+                return 'online'
+            print(result)
+            count1 += 1
             sock.close()
-            count_er = 0
-            return 'online'
-        else:
+        except socket.error as error:
+            count1 += 1
             sock.close()
-            count_er = count_er + 1
-            if count_er == 5:
-                bot_message(chat_name, str(member_knock[2]) + ' Offline')
-                count_er = 0
-                return 'offline'
-            knock_function(member_knock, count_er)
-    except Exception:
-        sock.close()
-        if count_er == 5:
-            count_er = 0
-            return 'offline'
-        count_er = count_er + 1
-        knock_function(member_knock, count)
+    return 'offline'
 
 
 while 1 == 1:
@@ -64,11 +57,10 @@ while 1 == 1:
         ListAll = [line.rstrip('\n').split(';') for line in f]
         f.close()
     for member in ListAll:
-        count = 0
-        res1 = knock_function(member, count)
+        res1 = knock_function(member)
         if res1 == 'offline':
+            bad_port_list.append(member)
             print("result of test: " + str(res1))
-            bot_message(chat_name, str(member[2]) + ' offline')
         else:
             print('result of test: ' + str(res1))
             good_port_list.append(member)
