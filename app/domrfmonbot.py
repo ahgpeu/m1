@@ -43,13 +43,12 @@ def knock_function(member_knock):
             if result == 0:
                 sock.close()
                 return 'online'
-            print(result)
             count1 += 1
             sock.close()
-            time.sleep(1)
+            time.sleep(3)
         except socket.error as error:
             count1 += 1
-            time.sleep(1)
+            time.sleep(3)
             sock.close()
     return 'offline'
 
