@@ -15,7 +15,7 @@
 {% for mem in good_list %}
 <tr>
 {% if mem[1] < 30 %}
-<td><b><font color = "DarkOrange"><p>https://{{mem[0]}}</p></b></font></td><td><font color = "DarkOrange"><b><p> ДОСТУПЕН, срок действия сертификата {{mem[1]}} дней.</p></font></b></td>
+    <td><b><font color = "DarkOrange"><p>https://{{mem[0]}}</p></b></font></td><td><font color = "DarkOrange"><b><p> ДОСТУПЕН, срок действия сертификата {{mem[1]}} дней.</p></b></font></b></td>
 {% else %}
 <td><b><font color = "green"><p>https://{{mem[0]}}</p></font></b></td><td><b><font color = "green"> <p> ДОСТУПЕН, срок действия сертификата {{mem[1]}} дней.</p></font></b></td>
 {% endif %}
@@ -26,7 +26,7 @@
 <table border = 1 width = 600>
 {% for mem in bad_port_list %}
 <tr>
-<td><b><font color = "red"><p>{{mem}} НЕДОСТУПЕН</p></font></td>
+<td><b><font color = "red"><p>{{mem}} НЕДОСТУПЕН</p></font></b></td>
 </tr>
 {% endfor %}
 {% for mem in good_port_list %}
