@@ -82,8 +82,10 @@ while 1 == 1:
     if len(bad_list) > 0 or len(bad_port_list):
         for member in bad_list:
             bot_message(chat_name, str(member) + ' НЕДОСТУПЕН')
+            print(str(member) + ' НЕДОСТУПЕН')
         for member in bad_port_list:
             bot_message(chat_name, str(member[2]) + ' offline')
+            print(str(member[2]) + ' offline')
             bad_list = []
             bad_port_list = []
         time.sleep(300)
