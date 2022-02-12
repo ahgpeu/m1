@@ -16,7 +16,7 @@ with open('config/bot.cfg', 'r') as f:
 
 def bot_message(botname, message):
     requests.get('https://api.telegram.org/bot{}/sendMessage'.format(api_token),
-                 params=dict(chat_id=botname, text=str(member) + message))
+                 params=dict(chat_id=botname, text=message))
 
 
 def ssl_expiry_datetime(host, port):
