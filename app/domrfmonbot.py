@@ -84,5 +84,7 @@ while 1 == 1:
             bot_message(chat_name, str(member) + ' НЕДОСТУПЕН')
         for member in bad_port_list:
             bot_message(chat_name, str(member[2]) + ' offline')
+            bad_list = []
+            bad_port_list = []
         time.sleep(300)
     time.sleep(5)
