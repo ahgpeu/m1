@@ -42,6 +42,7 @@ def knock_function(member_knock):
             result = sock.connect_ex((str(member_knock[0]), int(member_knock[1])))
             if result == 0:
                 sock.close()
+                count1 = 0
                 return 'online'
             count1 += 1
             sock.close()
@@ -88,5 +89,6 @@ while 1 == 1:
             bot_message(chat_name, str(member[2]) + ' offline')
             print(str(member[2]) + ' offline')
             bad_port_list = []
+            cou
         time.sleep(300)
     time.sleep(5)
