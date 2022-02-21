@@ -89,6 +89,5 @@ while 1 == 1:
             bot_message(chat_name, str(member[2]) + ' offline')
             print(str(member[2]) + ' offline')
             bad_port_list = []
-            cou
         time.sleep(300)
     time.sleep(5)
