@@ -37,7 +37,7 @@ def knock_function(member_knock):
     count1 = 0
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(1)
-    while count1 <= 7:
+    while count1 <= 6:
         try:
             result = sock.connect_ex((str(member_knock[0]), int(member_knock[1])))
             if result == 0:
@@ -46,10 +46,10 @@ def knock_function(member_knock):
                 return 'online'
             count1 += 1
             sock.close()
-            time.sleep(3)
+            time.sleep(1)
         except socket.error:
             count1 += 1
-            time.sleep(3)
+            time.sleep(1)
             sock.close()
     return 'offline'
 
@@ -79,7 +79,6 @@ while 1 == 1:
                 good_list.append(member)
         else:
             bad_list.append(member)
-            bot_message(chat_name, str(member) + ' НЕДОСТУПЕН!')
     if len(bad_list) > 0 or len(bad_port_list):
         for member in bad_list:
             bot_message(chat_name, str(member) + ' НЕДОСТУПЕН')
