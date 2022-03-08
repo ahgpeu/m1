@@ -37,7 +37,7 @@ def knock_function(member_knock):
     count1 = 0
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(1)
-    while count1 <= 6:
+    while count1 <= 7:
         try:
             result = sock.connect_ex((str(member_knock[0]), int(member_knock[1])))
             if result == 0:
